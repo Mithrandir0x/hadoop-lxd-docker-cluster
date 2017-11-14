@@ -1,0 +1,7 @@
+
+# location of TLK key/cert
+REGISTRY_HTTP_TLS_KEY=/registry/key.pem
+REGISTRY_HTTP_TLS_CERTIFICATE=/registry/cert.pem
+
+# location of CA of trusted clients
+REGISTRY_HTTP_TLS_CLIENTCAS_0=/registry/ca.pem

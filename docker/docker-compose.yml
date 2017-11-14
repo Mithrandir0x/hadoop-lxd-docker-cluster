@@ -1,0 +1,67 @@
+version: '3'
+services:
+  namenode:
+    image: edge-local-grid:443/local.grid/hdfs-namenode:2.8.1
+    volumes:
+      - "/data/hadoop/tmp/dfs/name:/hadoop/tmp/dfs/name"
+    deploy:
+      placement:
+        constraints: [ node.labels.role-namenode==true ]
+    ports:
+      - 50070:50070
+      - 8020:8020
+    env_file:
+      - /docker/hadoop.env
+  datanode:
+    image: edge-local-grid:443/local.grid/hdfs-datanode:2.8.1
+    deploy:
+      placement:
+        constraints: [ node.labels.role-datanode==true ]
+    ports:
+      - 50010:50010
+      - 50020:50020
+      - 50075:50075
+    env_file:
+      - /docker/hadoop.env
+  resourcemanager:
+    image: edge-local-grid:443/local.grid/yarn-resourcemanager:2.8.1
+    deploy:
+      placement:
+        constraints: [ node.labels.role-resourcemanager == true ]
+    ports:
+      - 8088:8088
+      - 8032:8032
+      - 8030:8030
+      - 8031:8031
+      - 8033:8033
+    env_file:
+      - /docker/hadoop.env
+  nodemanager:
+    image: edge-local-grid:443/local.grid/yarn-nodemanager:2.8.1
+    deploy:
+      placement:
+        constraints: [ node.labels.role-nodemanager==true ]
+    ports:
+      - 8040:8040
+      - 8042:8042
+      - 45454:45454
+    env_file:
+      - /docker/hadoop.env
+  jobhistory:
+    image: edge-local-grid:443/local.grid/mapred-jobhistory:2.8.1
+    deploy:
+      placement:
+        constraints: [ node.labels.role-jobhistory==true ]
+    ports:
+      - 19888:19888
+    env_file:
+      - /docker/hadoop.env
+  zeppelin:
+    image: edge-local-grid:443/local.grid/zeppelin:2.8.1
+    deploy:
+      placement:
+        constraints: [ node.labels.role-zeppelin==true ]
+    ports:
+      - 8080:18080
+    env_file:
+      - /docker/hadoop.env
