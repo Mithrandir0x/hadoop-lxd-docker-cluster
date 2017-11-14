@@ -1,0 +1,7 @@
+= hadoop-lxd-docker-cluster
+Oriol López Sánchez
+:toc:
+
+This repo contains an example of a Hadoop cluster generated with hardware contention on LXD and software contention on Docker Swarm.
+
+More info available at: https://slides.com/oriollopezsanchez/lxd-as-an-alternative-containment-solution-compatible-with-docker
