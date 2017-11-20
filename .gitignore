@@ -1,0 +1,10 @@
+
+# registry certs stuff
+lxd/registry/ca-key.pem
+lxd/registry/ca.pem
+lxd/registry/ca.srl
+lxd/registry/cert.pem
+lxd/registry/key.csr
+lxd/registry/key.pem
+lxd/registry/openssl.cnf
+
