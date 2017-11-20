@@ -1,7 +1,7 @@
 version: '3'
 services:
   namenode:
-    image: edge-local-grid:443/local.grid/hdfs-namenode:2.8.1
+    image: edge-local-vm:443/local.vm/hdfs-namenode:2.8.1
     volumes:
       - "/data/hadoop/tmp/dfs/name:/hadoop/tmp/dfs/name"
     deploy:
@@ -13,7 +13,7 @@ services:
     env_file:
       - /docker/hadoop.env
   datanode:
-    image: edge-local-grid:443/local.grid/hdfs-datanode:2.8.1
+    image: edge-local-vm:443/local.vm/hdfs-datanode:2.8.1
     deploy:
       placement:
         constraints: [ node.labels.role-datanode==true ]
@@ -24,7 +24,7 @@ services:
     env_file:
       - /docker/hadoop.env
   resourcemanager:
-    image: edge-local-grid:443/local.grid/yarn-resourcemanager:2.8.1
+    image: edge-local-vm:443/local.vm/yarn-resourcemanager:2.8.1
     deploy:
       placement:
         constraints: [ node.labels.role-resourcemanager == true ]
@@ -37,7 +37,7 @@ services:
     env_file:
       - /docker/hadoop.env
   nodemanager:
-    image: edge-local-grid:443/local.grid/yarn-nodemanager:2.8.1
+    image: edge-local-vm:443/local.vm/yarn-nodemanager:2.8.1
     deploy:
       placement:
         constraints: [ node.labels.role-nodemanager==true ]
@@ -48,7 +48,7 @@ services:
     env_file:
       - /docker/hadoop.env
   jobhistory:
-    image: edge-local-grid:443/local.grid/mapred-jobhistory:2.8.1
+    image: edge-local-vm:443/local.vm/mapred-jobhistory:2.8.1
     deploy:
       placement:
         constraints: [ node.labels.role-jobhistory==true ]
@@ -57,7 +57,7 @@ services:
     env_file:
       - /docker/hadoop.env
   zeppelin:
-    image: edge-local-grid:443/local.grid/zeppelin:2.8.1
+    image: edge-local-vm:443/local.vm/zeppelin:2.8.1
     deploy:
       placement:
         constraints: [ node.labels.role-zeppelin==true ]
