@@ -19,6 +19,20 @@ lxc exec edge-local-vm -- docker service create \
 
 
 lxc exec edge-local-vm -- docker service create \
+    --name "datanode-data02-local-vm" \
+    --hostname "{{.Node.Hostname}}" \
+    --restart-condition none \
+    --network vxlan-local-vm \
+    --publish mode=host,target=50010,published=50010 \
+    --publish mode=host,target=50020,published=50020 \
+    --publish mode=host,target=50075,published=50075 \
+    --constraint "node.labels.role-datanode==true" \
+    --replicas 2 \
+    --env-file /docker/hadoop.env \
+    edge-local-vm:443/local.vm/hdfs-datanode:2.8.1
+
+
+lxc exec edge-local-vm -- docker service create \
     --name "resourcemanager-mt-local-vm" \
     --hostname "{{.Node.Hostname}}" \
     --restart-condition none \
@@ -31,6 +45,20 @@ lxc exec edge-local-vm -- docker service create \
     --constraint "node.labels.role-resourcemanager == true" \
     --env-file /docker/hadoop.env \
     edge-local-vm:443/local.vm/yarn-resourcemanager:2.8.1
+
+
+lxc exec edge-local-vm -- docker service create \
+    --name "nodemanager-data02-local-vm" \
+    --hostname "{{.Node.Hostname}}" \
+    --restart-condition none \
+    --network vxlan-local-vm \
+    --publish mode=host,target=8040,published=8040 \
+    --publish mode=host,target=8042,published=8042 \
+    --publish mode=host,target=45454,published=45454 \
+    --constraint "node.labels.role-nodemanager==true" \
+    --replicas 2 \
+    --env-file /docker/hadoop.env \
+    edge-local-vm:443/local.vm/yarn-nodemanager:2.8.1
 
 
 lxc exec edge-local-vm -- docker service create \
@@ -53,20 +81,6 @@ lxc exec edge-local-vm -- docker service create \
     --constraint "node.labels.role-zeppelin==true" \
     --env-file /docker/hadoop.env \
     edge-local-vm:443/local.vm/zeppelin:2.8.1
-
-
-lxc exec edge-local-vm -- docker service create \
-    --name "datanode-data02-local-vm" \
-    --hostname "{{.Node.Hostname}}" \
-    --restart-condition none \
-    --network vxlan-local-vm \
-    --publish mode=host,target=50010,published=50010 \
-    --publish mode=host,target=50020,published=50020 \
-    --publish mode=host,target=50075,published=50075 \
-    --constraint "node.labels.role-datanode==true" \
-    --replicas 2 \
-    --env-file /docker/hadoop.env \
-    edge-local-vm:443/local.vm/hdfs-datanode:2.8.1
 
 
 lxc exec edge-local-vm -- docker service create \
